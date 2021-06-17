@@ -7,13 +7,8 @@
 
 from __future__ import print_function
 import json
-import base64
-import hmac
-import hashlib
-import time
 from threading import Thread
 from websocket import create_connection, WebSocketConnectionClosedException
-from pymongo import MongoClient
 from cbpro.cbpro_auth import get_auth_headers
 
 
@@ -47,6 +42,12 @@ class WebsocketClient(object):
         self.api_passphrase = api_passphrase
         self.should_print = should_print
         self.mongo_collection = mongo_collection
+
+    def authenticate(self, key='', secret='', passphrase=''):
+        self.auth = True
+        self.api_key = key
+        self.api_secret = secret
+        self.api_passphrase = passphrase
 
     def start(self):
         def _go():
